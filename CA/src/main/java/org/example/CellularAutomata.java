@@ -78,15 +78,13 @@ public class CellularAutomata extends JPanel {
     public void updateGUI() {
         for (Cell[] row : state) {
             for (Cell cell : row) {
-
                 if (cell.getCellState() == CellState.WHITE) {
                     cell.setBackground(Color.WHITE);
                 } else {
                     cell.setBackground(Color.BLACK);
                 }
-                repaint();
+                cell.setBorderPainted(false);
             }
-
         }
     }
 
@@ -105,5 +103,4 @@ public class CellularAutomata extends JPanel {
         }
         return res;
     }
-
 }

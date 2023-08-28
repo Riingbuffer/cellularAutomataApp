@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
 
 public class Cell extends JButton implements ActionListener {
 
@@ -51,8 +50,12 @@ public class Cell extends JButton implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        this.cellState = CellState.WHITE;
-        this.setBackground(Color.WHITE);
-        System.out.println(xCoord + " " + yCoord);
+        if (this.cellState == CellState.WHITE) {
+            this.setBackground(Color.BLACK);
+            this.cellState = CellState.BLACK;
+        } else {
+            this.setBackground(Color.WHITE);
+            this.cellState = CellState.WHITE;
+        }
     }
 }
