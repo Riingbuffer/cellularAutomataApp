@@ -1,27 +1,59 @@
 package org.example;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CellularAutomata {
+public class CellularAutomata extends JPanel {
 
     private Cell[][] state;
     private CellularAutomataRules rules;
+    private int sizeX, sizeY;
+    public CellularAutomata(CellularAutomataRules rules, int sizeX, int sizeY) {
+        this.state = new Cell[sizeX][sizeY];
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
 
-    public CellularAutomata(CellularAutomataRules rules, Cell[][] initialState) {
-        this.state = initialState.clone();
+        for (int i = 0; i < sizeX; i++) {
+            for (int j = 0; j < sizeY; j++) {
+                Cell cell = new Cell(CellState.BLACK, i, j);
+                this.state[i][j] = cell;
+                this.add(cell);
+                state[i][j].setBackground(Color.BLACK);
+            }
+        }
+
         this.rules = rules;
+
+        this.setLayout(new GridLayout(sizeX, sizeY));
+        this.setVisible(true);
     }
 
     public void iterate() {
-        Cell[][] newState = state.clone();
 
         for (Cell[] row : state) {
             for (Cell cell : row) {
-                newState[cell.getX()][cell.getY()] = rules.applyRule(cell
-                        , getSurroundingsOfCell(cell));
+                CellState cellState = rules.applyRule(cell, getSurroundingsOfCell(cell));
+                if (cellState != cell.getCellState()) {
+                    cell.setToBeSwitched(true);
+                }
             }
         }
+
+        for (Cell[] row : state) {
+            for (Cell cell : row) {
+                if (cell.isToBeSwitched()) {
+                    cell.setToBeSwitched(false);
+                    if (cell.getCellState() == CellState.WHITE) {
+                        cell.setCellState(CellState.BLACK);
+                    } else {
+                        cell.setCellState(CellState.WHITE);
+                    }
+                }
+            }
+        }
+
     }
 
     // môžme vracať string alebo rovno printovat táto funkcia robí obe
@@ -30,9 +62,9 @@ public class CellularAutomata {
         for (Cell[] row : state) {
             for (Cell cell : row) {
                 if (cell.getCellState() == CellState.WHITE) {
-                    res.append('A');
+                    res.append('W');
                 } else {
-                    res.append('D');
+                    res.append('B');
                 }
             }
             res.append('\n');
@@ -43,9 +75,24 @@ public class CellularAutomata {
         return res;
     }
 
+    public void updateGUI() {
+        for (Cell[] row : state) {
+            for (Cell cell : row) {
+
+                if (cell.getCellState() == CellState.WHITE) {
+                    cell.setBackground(Color.WHITE);
+                } else {
+                    cell.setBackground(Color.BLACK);
+                }
+                repaint();
+            }
+
+        }
+    }
+
     private List<Cell> getSurroundingsOfCell(Cell cell) {
-        int x = cell.getX();
-        int y = cell.getY();
+        int x = cell.getXCoord();
+        int y = cell.getYCoord();
         List<Cell> res = new ArrayList<>();
 
         for (int i = x - 1; i < x + 2; i++) {

@@ -1,15 +1,28 @@
 package org.example;
 
-public class Cell {
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 
-    private int x;
-    private int y;
+public class Cell extends JButton implements ActionListener {
+
+    private int xCoord;
+    private int yCoord;
     private CellState cellState;
+    private boolean toBeSwitched;
 
     public Cell(CellState cellState, int x, int y) {
-        this.x = x;
-        this.y = y;
+        this.xCoord = x;
+        this.yCoord = y;
         this.cellState = cellState;
+        this.toBeSwitched = false;
+
+        this.addActionListener(this);
+        //this.setPreferredSize(new Dimension(75, 75));
+        this.requestFocus();
+        this.setVisible(true);
     }
 
     public CellState getCellState() {
@@ -20,11 +33,26 @@ public class Cell {
         this.cellState = cellState;
     }
 
-    public int getX() {
-        return x;
+    public int getXCoord() {
+        return xCoord;
     }
 
-    public int getY() {
-        return y;
+    public int getYCoord() {
+        return yCoord;
+    }
+
+    public boolean isToBeSwitched() {
+        return toBeSwitched;
+    }
+
+    public void setToBeSwitched(boolean toBeSwitched) {
+        this.toBeSwitched = toBeSwitched;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        this.cellState = CellState.WHITE;
+        this.setBackground(Color.WHITE);
+        System.out.println(xCoord + " " + yCoord);
     }
 }
