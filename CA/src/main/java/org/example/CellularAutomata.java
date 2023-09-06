@@ -9,11 +9,8 @@ public class CellularAutomata extends JPanel {
 
     private Cell[][] state;
     private CellularAutomataRules rules;
-    private int sizeX, sizeY;
     public CellularAutomata(CellularAutomataRules rules, int sizeX, int sizeY) {
         this.state = new Cell[sizeX][sizeY];
-        this.sizeX = sizeX;
-        this.sizeY = sizeY;
 
         for (int i = 0; i < sizeX; i++) {
             for (int j = 0; j < sizeY; j++) {
@@ -102,5 +99,9 @@ public class CellularAutomata extends JPanel {
             }
         }
         return res;
+    }
+
+    public void setState(int x, int y, CellState cellState) {
+        this.state[y][x].setCellState(cellState);
     }
 }

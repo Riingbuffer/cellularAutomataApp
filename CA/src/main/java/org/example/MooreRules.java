@@ -8,11 +8,9 @@ public class MooreRules implements CellularAutomataRules {
         long aliveNeighbours = surroundings.stream().filter(x -> x.getCellState() == CellState.WHITE).count();
         if (cell.getCellState() == CellState.WHITE) {
             if (aliveNeighbours == 2 || aliveNeighbours == 3) {
-                //cell.setCellState(CellState.WHITE);
                 return CellState.WHITE;
             }
         } else if (aliveNeighbours == 3) {
-            //cell.setCellState(CellState.WHITE);
             return CellState.WHITE;
         }
         return CellState.BLACK;
