@@ -11,7 +11,7 @@ public class FileInput {
     CellularAutomataRules rules;
 
     public FileInput(String fileName) throws FileNotFoundException {
-        this.fileName = "C:\\Users\\macik\\Desktop\\UNIZA\\java\\cellularAutomat\\CA\\files\\" + fileName + ".txt";
+        this.fileName = fileName + ".txt";
         this.cellsNumber = 0;
         this.rulesAtSelectedIndex = 0;
         this.read();
