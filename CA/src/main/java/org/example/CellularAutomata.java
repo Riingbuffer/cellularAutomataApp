@@ -9,11 +9,13 @@ public class CellularAutomata extends JPanel {
 
     private Cell[][] state;
     private CellularAutomataRules rules;
-    public CellularAutomata(CellularAutomataRules rules, int sizeX, int sizeY) {
-        this.state = new Cell[sizeX][sizeY];
+    private int cellsNumber;
+    public CellularAutomata(CellularAutomataRules rules, int cellsNumber) {
+        this.cellsNumber = cellsNumber;
+        this.state = new Cell[this.cellsNumber][this.cellsNumber];
 
-        for (int i = 0; i < sizeX; i++) {
-            for (int j = 0; j < sizeY; j++) {
+        for (int i = 0; i < this.cellsNumber; i++) {
+            for (int j = 0; j < this.cellsNumber; j++) {
                 Cell cell = new Cell(CellState.BLACK, i, j);
                 this.state[i][j] = cell;
                 this.add(cell);
@@ -23,7 +25,7 @@ public class CellularAutomata extends JPanel {
 
         this.rules = rules;
 
-        this.setLayout(new GridLayout(sizeX, sizeY));
+        this.setLayout(new GridLayout(this.cellsNumber, this.cellsNumber));
         this.setVisible(true);
     }
 
@@ -101,7 +103,12 @@ public class CellularAutomata extends JPanel {
         return res;
     }
 
-    public void setState(int x, int y, CellState cellState) {
-        this.state[y][x].setCellState(cellState);
+    public void copyState(Cell[][] state) {
+        for (int i = 0; i < this.cellsNumber; i++) {
+            for (int j = 0; j < this.cellsNumber; j++) {
+                this.state[j][i].setCellState(state[j][i].getCellState());
+            }
+        }
     }
+
 }
