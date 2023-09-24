@@ -8,7 +8,7 @@ public class GameLayoutManager {
 
     public GameLayoutManager() {
         this.gameLayouts = new HashMap<>();
-        this.loadLayoutFromFile("layouts.dat");
+        this.loadLayoutFromFile();
     }
 
     public void addGameLayout(String key, GameLayout gameLayout) {
@@ -19,21 +19,21 @@ public class GameLayoutManager {
         this.gameLayouts.remove(key);
     }
 
-    public void saveLayoutToFile(String name) {
+    public void saveLayoutToFile() {
         try {
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(name));
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("layouts.dat"));
             objectOutputStream.writeObject(this.gameLayouts);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void loadLayoutFromFile(String name) {
+    public void loadLayoutFromFile() {
         try {
-            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(name));
+            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("layouts.dat"));
             this.gameLayouts = (HashMap<String, GameLayout>) objectInputStream.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            saveLayoutToFile(name);
+            saveLayoutToFile();
         }
     }
 

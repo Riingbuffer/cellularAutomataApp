@@ -21,7 +21,6 @@ public class GameScreen extends JFrame {
         this.cellularAutomata = cellularAutomata;
         this.startScreen = startScreen;
         this.startScreen.setVisibility(false);
-        this.cellularAutomata.updateGUI();
 
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setPreferredSize(new Dimension(600, 600));
@@ -46,6 +45,7 @@ public class GameScreen extends JFrame {
         Timer timer = new Timer(100, e1 -> {
             cellularAutomata.iterate();
             cellularAutomata.updateGUI();
+            repaint();
         });
 
         buttonStart.addActionListener(e -> {
@@ -75,6 +75,7 @@ public class GameScreen extends JFrame {
             running = !running;
         });
 
+
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
@@ -84,6 +85,8 @@ public class GameScreen extends JFrame {
                 }
             }
         });
+
+
 
         this.pack();
         this.setLocationRelativeTo(null);

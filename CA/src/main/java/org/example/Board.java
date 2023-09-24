@@ -22,10 +22,6 @@ public class Board extends JPanel {
         this.setVisible(true);
     }
 
-    public void setState(int x, int y, CellState cellState) {
-        this.state[y][x].setCellState(cellState);
-    }
-
     public Cell[][] getState() {
         return state;
     }

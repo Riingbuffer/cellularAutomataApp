@@ -19,7 +19,6 @@ public class Cell extends JButton implements ActionListener {
         this.toBeSwitched = false;
 
         this.addActionListener(this);
-        //this.setPreferredSize(new Dimension(75, 75));
         this.requestFocus();
         this.setVisible(true);
     }

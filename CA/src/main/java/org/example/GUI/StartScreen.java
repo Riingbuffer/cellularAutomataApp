@@ -10,7 +10,7 @@ import java.text.NumberFormat;
 import static javax.swing.JOptionPane.YES_OPTION;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
-public class StartScreen {
+public class StartScreen extends JPanel {
     private JPanel mainPanel;
     private JPanel northPanel;
     private JLabel appName;
@@ -38,6 +38,7 @@ public class StartScreen {
 
     public StartScreen() {
 
+
         this.frame = new JFrame();
         this.frame.setContentPane(this.mainPanel);
         this.frame.setTitle("Cellular automata");
@@ -48,6 +49,8 @@ public class StartScreen {
         this.frame.pack();
         this.frame.setLocationRelativeTo(null);
         this.frame.setVisible(true);
+
+
 
         layoutBox.setEnabled(false);
         createButton.setEnabled(false);
@@ -101,6 +104,7 @@ public class StartScreen {
 
         createButton.addActionListener(e -> {
             this.setVisibility(false);
+            this.setVisible(false);
             new CreateLayout(this);
         });
 
@@ -112,6 +116,8 @@ public class StartScreen {
                 this.removeGameLayout(layoutName);
             }
         });
+
+        this.setVisibility(true);
     }
 
     private void createUIComponents() {
@@ -126,9 +132,11 @@ public class StartScreen {
         }
     }
 
+
     public void setVisibility(boolean b) {
         this.frame.setVisible(b);
     }
+
 
     private void chooseLayout() {
         String layoutName = (String)layoutBox.getSelectedItem();
@@ -136,6 +144,7 @@ public class StartScreen {
         if (gameLayout == null) return;
         CellularAutomata cellularAutomata = new CellularAutomata(gameLayout.getRules(), gameLayout.getNumberOfCells());
         cellularAutomata.copyState(gameLayout.getCells());
+        cellularAutomata.updateGUI();
         new GameScreen(cellularAutomata, this);
     }
 
@@ -150,7 +159,7 @@ public class StartScreen {
     public void addGameLayout(String key, GameLayout gameLayout) {
         gameLayoutManager.addGameLayout(key, gameLayout);
         refreshLayoutBox();
-        gameLayoutManager.saveLayoutToFile("layouts.dat");
+        gameLayoutManager.saveLayoutToFile();
     }
 
     public void removeGameLayout(String key) {
